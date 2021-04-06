@@ -6,14 +6,23 @@ async function main() {
  */
     const uri = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.9klct.mongodb.net/myFirstDatabasetest?retryWrites=true&w=majority";
     const client = new MongoClient(uri);
-    await client.connect();
-    await listDatabases(client);
+    //await client.connect();
+    //await listDatabases(client);
     try {
-        await client.connect();
+        await client.connect(); //asynchronous process
 
-        await listDatabases(client);
+        const database= client.db("lab");
+        const collection= database.collection("members");
+        const res= await collection.deleteOne(
+            {
+                name:"Arfan bin Azman"
+            }
+        );
+        
+        console.log(res)
+        //await listDatabases(client);
  
-    }   catch (e) {
+    }   catch (e) {//exception
     console.error(e);
     }
     finally {
@@ -22,9 +31,9 @@ async function main() {
 }
 main().catch(console.error);
 
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
+//async function listDatabases(client){
+    //databasesList = await client.db().admin().listDatabases();
  
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
+    //console.log("Databases:");
+    //databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+//};
