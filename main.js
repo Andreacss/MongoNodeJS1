@@ -11,13 +11,10 @@ async function main() {
     try {
         await client.connect(); //asynchronous process
 
-        const database= client.db("lab");
-        const collection= database.collection("members");
-        const res= await collection.deleteOne(
-            {
-                name:"Arfan bin Azman"
-            }
-        );
+        const database= client.db("sample_training");
+        const collection= database.collection("posts");
+        const res= await collection.find(
+          {"date":{"$lt":"2012-11-20T05:05:15.250Z"}}).toArray()
         
         console.log(res)
         //await listDatabases(client);
@@ -30,10 +27,3 @@ async function main() {
     }
 }
 main().catch(console.error);
-
-//async function listDatabases(client){
-    //databasesList = await client.db().admin().listDatabases();
- 
-    //console.log("Databases:");
-    //databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-//};
